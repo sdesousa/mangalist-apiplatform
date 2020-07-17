@@ -22,6 +22,7 @@ class Author
      *      max = 255,
      *      maxMessage = "Prénom trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string|null
      */
     private ?string $firstname;
 
@@ -31,6 +32,7 @@ class Author
      *      max = 255,
      *      maxMessage = "Nom trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string|null
      */
     private ?string $lastname;
 
@@ -40,6 +42,7 @@ class Author
      *      max = 255,
      *      maxMessage = "Pseudo trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string|null
      */
     private ?string $penname;
 

@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Trait Timestampable
+ * @package App\Entity
+ */
 trait Timestampable
 {
     /**

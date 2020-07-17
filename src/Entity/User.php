@@ -16,23 +16,26 @@ class User implements UserInterface
     use Timestampable;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @var string
      */
     private string $email;
 
     /**
      * @ORM\Column(type="json")
+     * @var array
      */
     private array $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
+     * @var string The hashed password
      */
     private string $password;
 
     /**
      * @ORM\OneToOne(targetEntity=Record::class, mappedBy="user", cascade={"persist", "remove"})
+     * @var Record
      */
     private Record $record;
 
@@ -55,7 +58,6 @@ class User implements UserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string

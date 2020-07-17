@@ -22,12 +22,14 @@ class EditorCollection
      *      max = 255,
      *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string
      */
     private string $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="editorCollections")
      * @ORM\JoinColumn(nullable=false)
+     * @var Editor|null
      */
     private ?Editor $editor;
 

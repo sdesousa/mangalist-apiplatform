@@ -24,6 +24,7 @@ class Record
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="record", cascade={"persist", "remove"})
+     * @var User
      */
     private User $user;
 

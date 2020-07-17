@@ -28,18 +28,21 @@ class Manga
      *      max = 255,
      *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string
      */
     private string $title;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Positive(message="Dois être strictement positif")
+     * @var int|null
      */
     private ?int $totalVolume;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\PositiveOrZero(message="Dois être positif")
+     * @var int|null
      */
     private ?int $availableVolume;
 
@@ -49,17 +52,20 @@ class Manga
      *     value="1900",
      *     message="Année invalide"
      * )
+     * @var int|null
      */
     private ?int $year;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="mangas")
      * @ORM\JoinColumn(nullable=false)
+     * @var Editor|null
      */
     private ?Editor $editor;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EditorCollection", inversedBy="mangas")
+     * @var EditorCollection|null
      */
     private ?EditorCollection $editorCollection;
 
@@ -71,6 +77,7 @@ class Manga
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @var string|null
      */
     private ?string $comment;
 

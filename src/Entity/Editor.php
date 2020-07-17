@@ -28,6 +28,7 @@ class Editor
      *      max = 255,
      *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string
      */
     private string $name;
 

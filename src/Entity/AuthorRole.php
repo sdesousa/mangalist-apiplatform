@@ -28,6 +28,7 @@ class AuthorRole
      *      max = 255,
      *      maxMessage = "Role trop long, il doit être au plus {{ limit }} caractères"
      * )
+     * @var string
      */
     private string $role;
 

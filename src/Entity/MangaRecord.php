@@ -24,18 +24,21 @@ class MangaRecord
     /**
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="mangaRecords")
      * @ORM\JoinColumn(nullable=false)
+     * @var Manga|null
      */
     private ?Manga $manga;
 
     /**
      * @ORM\ManyToOne(targetEntity=Record::class, inversedBy="mangaRecords")
      * @ORM\JoinColumn(nullable=false)
+     * @var Record|null
      */
     private ?Record $record;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\Positive(message="Dois être strictement positif")
+     * @var int|null
      */
     private ?int $possessedVolume;
 
@@ -46,6 +49,7 @@ class MangaRecord
 
     public function __construct()
     {
+        $this->possessedVolume = 0;
         $this->createdAt = new DateTimeImmutable();
     }
 

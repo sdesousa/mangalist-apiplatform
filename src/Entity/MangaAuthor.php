@@ -16,18 +16,21 @@ class MangaAuthor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AuthorRole", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @var AuthorRole|null
      */
     private ?AuthorRole $authorRole;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Manga", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @var Manga|null
      */
     private ?Manga $manga;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @var Author|null
      */
     private ?Author $author;
 
