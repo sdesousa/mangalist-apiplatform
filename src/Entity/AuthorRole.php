@@ -16,12 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class AuthorRole
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use RessourceId;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -37,16 +32,11 @@ class AuthorRole
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="authorRole")
      * @var ArrayCollection<int, MangaAuthor>
      */
-    private $mangaAuthors;
+    private ArrayCollection $mangaAuthors;
 
     public function __construct()
     {
         $this->mangaAuthors = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getRole(): ?string

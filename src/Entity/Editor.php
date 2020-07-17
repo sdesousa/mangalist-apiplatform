@@ -16,12 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Editor
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use RessourceId;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,23 +32,18 @@ class Editor
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editor")
      * @var ArrayCollection<int, Manga>
      */
-    private $mangas;
+    private ArrayCollection $mangas;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EditorCollection", mappedBy="editor", orphanRemoval=true)
      * @var ArrayCollection<int, EditorCollection>
      */
-    private $editorCollections;
+    private ArrayCollection $editorCollections;
 
     public function __construct()
     {
         $this->mangas = new ArrayCollection();
         $this->editorCollections = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getName(): ?string

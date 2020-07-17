@@ -11,18 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Record
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use RessourceId;
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="record", orphanRemoval=true)
      * @var ArrayCollection<int, MangaRecord>
      */
-    private $mangaRecords;
+    private ArrayCollection $mangaRecords;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="record", cascade={"persist", "remove"})
@@ -32,11 +27,6 @@ class Record
     public function __construct()
     {
         $this->mangaRecords = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**

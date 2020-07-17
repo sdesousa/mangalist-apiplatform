@@ -9,12 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MangaAuthor
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use RessourceId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AuthorRole", inversedBy="mangaAuthors")
@@ -33,11 +28,6 @@ class MangaAuthor
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Author $author;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getAuthorRole(): ?AuthorRole
     {

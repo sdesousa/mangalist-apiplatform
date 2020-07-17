@@ -17,12 +17,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class MangaRecord
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id;
+    use RessourceId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="mangaRecords")
@@ -47,7 +42,6 @@ class MangaRecord
      */
     private ?string $comment;
 
-
     /**
      * @Assert\Callback
      * @param ExecutionContextInterface $context
@@ -61,11 +55,6 @@ class MangaRecord
                 ->atPath('possessedVolume')
                 ->addViolation();
         }
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getManga(): ?Manga

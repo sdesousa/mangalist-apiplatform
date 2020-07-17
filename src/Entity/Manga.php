@@ -16,12 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Manga
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use RessourceId;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -69,7 +64,7 @@ class Manga
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="manga", cascade={"persist"})
      * @var ArrayCollection<int, MangaAuthor>
      */
-    private $mangaAuthors;
+    private ArrayCollection $mangaAuthors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -80,17 +75,12 @@ class Manga
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="manga", orphanRemoval=true)
      * @var ArrayCollection<int, MangaRecord>
      */
-    private $mangaRecords;
+    private ArrayCollection $mangaRecords;
 
     public function __construct()
     {
         $this->mangaAuthors = new ArrayCollection();
         $this->mangaRecords = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getTitle(): ?string
