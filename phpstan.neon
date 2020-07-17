@@ -3,6 +3,5 @@ includes:
     - vendor/phpstan/phpstan-doctrine/rules.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
 parameters:
-    excludes_analyse:
-        - tests/bootstrap.php
-    checkMissingIterableValueType: false
+    bootstrapFiles:
+        - bin/.phpunit/phpunit-7.5-0/vendor/autoload.php

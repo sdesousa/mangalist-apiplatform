@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RecordRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +11,7 @@ use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=RecordRepository::class)
+ * @ApiResource()
  */
 class Record
 {

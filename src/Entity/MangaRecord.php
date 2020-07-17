@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MangaRecordRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,6 +16,7 @@ use DateTimeImmutable;
  *     fields={"manga", "record"},
  *     message="Série déjà possédé"
  * )
+ * @ApiResource()
  */
 class MangaRecord
 {

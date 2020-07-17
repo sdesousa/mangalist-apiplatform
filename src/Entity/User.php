@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -9,6 +10,7 @@ use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource()
  */
 class User implements UserInterface
 {
@@ -23,7 +25,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @var array
+     * @var array<string>
      */
     private array $roles = [];
 
@@ -77,6 +79,11 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+
+    /**
+     * @param array<string> $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
