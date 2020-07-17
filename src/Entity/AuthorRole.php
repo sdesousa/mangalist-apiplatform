@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRoleRepository")
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AuthorRole
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -37,6 +39,7 @@ class AuthorRole
     public function __construct()
     {
         $this->mangaAuthors = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getRole(): ?string

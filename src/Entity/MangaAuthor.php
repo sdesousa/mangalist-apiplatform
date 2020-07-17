@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MangaAuthorRepository")
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MangaAuthor
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AuthorRole", inversedBy="mangaAuthors")
@@ -28,6 +30,11 @@ class MangaAuthor
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Author $author;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getAuthorRole(): ?AuthorRole
     {

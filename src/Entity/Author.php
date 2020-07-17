@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Author
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -49,6 +51,7 @@ class Author
     public function __construct()
     {
         $this->mangaAuthors = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getFirstname(): ?string

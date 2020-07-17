@@ -10,6 +10,7 @@ trait RessourceId
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private int $id;
 

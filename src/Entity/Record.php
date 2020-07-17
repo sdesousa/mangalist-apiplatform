@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\RecordRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=RecordRepository::class)
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Record
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="record", orphanRemoval=true)
@@ -27,6 +29,7 @@ class Record
     public function __construct()
     {
         $this->mangaRecords = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     /**

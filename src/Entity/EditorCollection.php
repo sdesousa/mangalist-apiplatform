@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditorCollectionRepository")
@@ -12,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class EditorCollection
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -37,6 +39,7 @@ class EditorCollection
     public function __construct()
     {
         $this->mangas = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getName(): ?string

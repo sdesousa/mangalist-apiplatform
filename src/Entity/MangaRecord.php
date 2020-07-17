@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=MangaRecordRepository::class)
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class MangaRecord
 {
     use RessourceId;
+    use Timestampable;
 
     /**
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="mangaRecords")
@@ -41,6 +43,11 @@ class MangaRecord
      * @ORM\Column(type="text", nullable=true)
      */
     private ?string $comment;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     /**
      * @Assert\Callback
