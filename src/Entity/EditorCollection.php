@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeImmutable;
@@ -32,9 +33,9 @@ class EditorCollection
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editorCollection")
-     * @var ArrayCollection<int, Manga>
+     * @var Collection<int, Manga>
      */
-    private ArrayCollection $mangas;
+    private Collection $mangas;
 
     public function __construct()
     {
@@ -67,9 +68,9 @@ class EditorCollection
     }
 
     /**
-     * @return ArrayCollection<int, Manga>
+     * @return Collection<int, Manga>
      */
-    public function getMangas(): ArrayCollection
+    public function getMangas(): Collection
     {
         return $this->mangas;
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -64,9 +65,9 @@ class Manga
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="manga", cascade={"persist"})
-     * @var ArrayCollection<int, MangaAuthor>
+     * @var Collection<int, MangaAuthor>
      */
-    private ArrayCollection $mangaAuthors;
+    private Collection $mangaAuthors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -75,9 +76,9 @@ class Manga
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="manga", orphanRemoval=true)
-     * @var ArrayCollection<int, MangaRecord>
+     * @var Collection<int, MangaRecord>
      */
-    private ArrayCollection $mangaRecords;
+    private Collection $mangaRecords;
 
     public function __construct()
     {
@@ -159,9 +160,9 @@ class Manga
     }
 
     /**
-     * @return ArrayCollection<int, MangaAuthor>
+     * @return Collection<int, MangaAuthor>
      */
-    public function getMangaAuthors(): ArrayCollection
+    public function getMangaAuthors(): Collection
     {
         return $this->mangaAuthors;
     }
@@ -202,9 +203,9 @@ class Manga
     }
 
     /**
-     * @return ArrayCollection<int, MangaRecord>
+     * @return Collection<int, MangaRecord>
      */
-    public function getMangaRecords(): ArrayCollection
+    public function getMangaRecords(): Collection
     {
         return $this->mangaRecords;
     }

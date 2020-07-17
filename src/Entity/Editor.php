@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -32,15 +33,15 @@ class Editor
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editor")
-     * @var ArrayCollection<int, Manga>
+     * @var Collection<int, Manga>
      */
-    private ArrayCollection $mangas;
+    private Collection $mangas;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EditorCollection", mappedBy="editor", orphanRemoval=true)
-     * @var ArrayCollection<int, EditorCollection>
+     * @var Collection<int, EditorCollection>
      */
-    private ArrayCollection $editorCollections;
+    private Collection $editorCollections;
 
     public function __construct()
     {
@@ -62,9 +63,9 @@ class Editor
     }
 
     /**
-     * @return ArrayCollection<int, Manga>
+     * @return Collection<int, Manga>
      */
-    public function getMangas(): ArrayCollection
+    public function getMangas(): Collection
     {
         return $this->mangas;
     }
@@ -93,9 +94,9 @@ class Editor
     }
 
     /**
-     * @return ArrayCollection<int, EditorCollection>
+     * @return Collection<int, EditorCollection>
      */
-    public function getEditorCollections(): ArrayCollection
+    public function getEditorCollections(): Collection
     {
         return $this->editorCollections;
     }

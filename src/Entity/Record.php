@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RecordRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 
@@ -17,9 +18,9 @@ class Record
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="record", orphanRemoval=true)
-     * @var ArrayCollection<int, MangaRecord>
+     * @var Collection<int, MangaRecord>
      */
-    private ArrayCollection $mangaRecords;
+    private Collection $mangaRecords;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="record", cascade={"persist", "remove"})
@@ -33,9 +34,9 @@ class Record
     }
 
     /**
-     * @return ArrayCollection<int, MangaRecord>
+     * @return Collection<int, MangaRecord>
      */
-    public function getMangaRecords(): ArrayCollection
+    public function getMangaRecords(): Collection
     {
         return $this->mangaRecords;
     }
