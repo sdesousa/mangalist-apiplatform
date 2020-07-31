@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MangaAuthorRepository")
+ * @ApiResource()
  */
 class MangaAuthor
 {

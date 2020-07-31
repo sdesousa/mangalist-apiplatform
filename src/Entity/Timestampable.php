@@ -15,15 +15,15 @@ trait Timestampable
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotNull(message="Date de création obligatoire")
-     * @Assert\DateTime(message="Dois être une date")
+     * @Assert\Type("\DateTimeInterface", message="Dois être une date")
      * @var DateTimeInterface
      */
     private DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\DateTime(message="Dois être une date")
-     * @var DateTimeInterface
+     * @Assert\Type("\DateTimeInterface", message="Dois être une date")
+     * @var ?DateTimeInterface
      */
     private ?DateTimeInterface $updatedAt;
 
