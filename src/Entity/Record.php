@@ -8,10 +8,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RecordRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"record_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class Record
 {
@@ -20,12 +36,14 @@ class Record
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="record", orphanRemoval=true)
+     * @Groups({"record_details_read"})
      * @var Collection<int, MangaRecord>
      */
     private Collection $mangaRecords;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="record", cascade={"persist", "remove"})
+     * @Groups({"record_details_read"})
      * @var User
      */
     private User $user;

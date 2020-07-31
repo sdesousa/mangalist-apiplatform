@@ -7,10 +7,26 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use DateTimeImmutable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"user_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"user_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class User implements UserInterface
 {
@@ -19,6 +35,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Groups({"user_read", "user_details_read"})
      * @var string
      */
     private string $email;
@@ -37,6 +54,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Record::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user_read", "user_details_read"})
      * @var ?Record
      */
     private ?Record $record;
@@ -64,7 +82,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -96,7 +114,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self

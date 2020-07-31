@@ -6,12 +6,26 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
- * @ApiResource()
+ * @ApiResource(collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"author_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"author_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     })
  */
 class Author
 {
@@ -20,6 +34,21 @@ class Author
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({
+     *     "author_read",
+     *     "author_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "author_role_read",
+     *     "author_role_details_read"
+     * })
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "Prénom trop long, il doit être au plus {{ limit }} caractères"
@@ -30,6 +59,21 @@ class Author
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({
+     *     "author_read",
+     *     "author_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "author_role_read",
+     *     "author_role_details_read"
+     * })
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "Nom trop long, il doit être au plus {{ limit }} caractères"
@@ -40,6 +84,21 @@ class Author
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({
+     *     "author_read",
+     *     "author_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "author_role_read",
+     *     "author_role_details_read"
+     * })
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "Pseudo trop long, il doit être au plus {{ limit }} caractères"
@@ -50,6 +109,7 @@ class Author
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="author")
+     * @Groups({"author_read", "author_details_read"})
      * @var Collection<int, MangaAuthor>
      */
     private Collection $mangaAuthors;

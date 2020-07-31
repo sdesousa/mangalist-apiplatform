@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use DateTimeImmutable;
@@ -16,7 +17,22 @@ use DateTimeImmutable;
  *     fields={"name"},
  *     message="Editeur déjà présent"
  * )
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"editor_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"editor_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class Editor
 {
@@ -25,6 +41,21 @@ class Editor
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_collection_read",
+     *     "editor_collection_details_read",
+     *     "author_read",
+     *     "author_details_read"
+     * })
      * @Assert\NotBlank(message="Titre obligatoire")
      * @Assert\Length(
      *      max = 255,
@@ -36,12 +67,14 @@ class Editor
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editor")
+     * @Groups({"editor_read", "editor_details_read"})
      * @var Collection<int, Manga>
      */
     private Collection $mangas;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EditorCollection", mappedBy="editor", orphanRemoval=true)
+     * @Groups({"editor_read", "editor_details_read"})
      * @var Collection<int, EditorCollection>
      */
     private Collection $editorCollections;

@@ -5,10 +5,26 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MangaAuthorRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"manga_author_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"manga_author_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class MangaAuthor
 {
@@ -18,6 +34,19 @@ class MangaAuthor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AuthorRole", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "author_read",
+     *     "author_details_read"
+     * })
      * @var AuthorRole|null
      */
     private ?AuthorRole $authorRole;
@@ -25,6 +54,7 @@ class MangaAuthor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Manga", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"manga_author_read", "manga_author_details_read", "author_read", "author_details_read"})
      * @var Manga|null
      */
     private ?Manga $manga;
@@ -32,6 +62,19 @@ class MangaAuthor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "record_details_read",
+     *     "manga_record_read",
+     *     "manga_record_details_read",
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "editor_read",
+     *     "editor_details_read",
+     *     "author_role_read",
+     *     "author_role_details_read"
+     * })
      * @var Author|null
      */
     private ?Author $author;
