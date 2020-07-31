@@ -37,9 +37,9 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Record::class, mappedBy="user", cascade={"persist", "remove"})
-     * @var Record
+     * @var ?Record
      */
-    private Record $record;
+    private ?Record $record;
 
     public function __construct()
     {
@@ -124,7 +124,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getRecord(): Record
+    public function getRecord(): ?Record
     {
         return $this->record;
     }
