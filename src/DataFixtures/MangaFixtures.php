@@ -6,7 +6,7 @@ use App\Entity\Editor;
 use App\Entity\Manga;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Faker;
 
 class MangaFixtures extends Fixture implements DependentFixtureInterface
