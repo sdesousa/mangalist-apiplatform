@@ -31,3 +31,4 @@ grumphp:
                 - 'src'
             ruleset:
                 - 'phpmd.xml'
+        psalm: ~
