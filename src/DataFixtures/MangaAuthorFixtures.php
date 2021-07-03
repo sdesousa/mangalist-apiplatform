@@ -9,9 +9,13 @@ use App\Entity\MangaAuthor;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 
 class MangaAuthorFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @throws Exception
+     */
     public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < 400; $i++) {

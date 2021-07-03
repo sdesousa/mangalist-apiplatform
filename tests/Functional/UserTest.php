@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Faker\Factory;
@@ -10,6 +11,9 @@ class UserTest extends AbstractEndPoint
 {
     private string $userPayload = '{"email": "%s", "password": "password"}';
 
+    /**
+     * @throws JsonException
+     */
     public function testGetUsers(): void
     {
         $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/users');
@@ -23,6 +27,9 @@ class UserTest extends AbstractEndPoint
         }
     }
 
+    /**
+     * @throws JsonException
+     */
     public function testPostUsers(): void
     {
         $response = $this->getResponseFromRequest(

@@ -5,10 +5,14 @@ namespace App\DataFixtures;
 use App\Entity\Author;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 use Faker;
 
 class AuthorFixtures extends Fixture
 {
+    /**
+     * @throws Exception
+     */
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('ja_JP');

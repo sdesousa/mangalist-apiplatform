@@ -2,13 +2,16 @@
 
 namespace App\Tests\Functional;
 
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Faker\Factory;
 
 class EditorCollectionTest extends AbstractEndPoint
 {
 
+    /**
+     * @throws JsonException
+     */
     public function testGetEditorCollections(): void
     {
         $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editor_collections');
