@@ -45,15 +45,10 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @Assert\NotBlank(message="Titre obligatoire")
@@ -71,15 +66,10 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @Assert\Positive(message="Dois être strictement positif")
@@ -93,15 +83,10 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @Assert\PositiveOrZero(message="Dois être positif")
@@ -115,15 +100,10 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @Assert\GreaterThanOrEqual(
@@ -141,13 +121,9 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @var Editor|null
@@ -160,13 +136,9 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @var EditorCollection|null
@@ -179,11 +151,8 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read"
      * })
      * @var Collection<int, MangaAuthor>
@@ -196,15 +165,10 @@ class Manga
      *     "manga_read",
      *     "manga_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "editor_collection_read",
      *     "editor_collection_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @var string|null

@@ -38,13 +38,9 @@ class MangaAuthor
      *     "manga_author_read",
      *     "manga_author_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_read",
      *     "manga_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_read",
      *     "author_details_read"
      * })
      * @var AuthorRole|null
@@ -54,7 +50,11 @@ class MangaAuthor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Manga", inversedBy="mangaAuthors")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"manga_author_read", "manga_author_details_read", "author_read", "author_details_read"})
+     * @Groups({
+     *     "manga_author_read",
+     *     "manga_author_details_read",
+     *     "author_details_read"
+     * })
      * @var Manga|null
      */
     private ?Manga $manga;
@@ -66,13 +66,9 @@ class MangaAuthor
      *     "manga_author_read",
      *     "manga_author_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_read",
      *     "manga_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_role_read",
      *     "author_role_details_read"
      * })
      * @var Author|null

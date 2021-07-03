@@ -88,6 +88,14 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
     public function getRoles(): array
     {
         $roles = $this->roles;

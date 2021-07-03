@@ -38,15 +38,10 @@ class Author
      *     "author_read",
      *     "author_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "manga_read",
      *     "manga_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_role_read",
      *     "author_role_details_read"
      * })
      * @Assert\Length(
@@ -63,15 +58,10 @@ class Author
      *     "author_read",
      *     "author_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "manga_read",
      *     "manga_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_role_read",
      *     "author_role_details_read"
      * })
      * @Assert\Length(
@@ -88,15 +78,10 @@ class Author
      *     "author_read",
      *     "author_details_read",
      *     "record_details_read",
-     *     "manga_record_read",
      *     "manga_record_details_read",
-     *     "manga_author_read",
      *     "manga_author_details_read",
-     *     "manga_read",
      *     "manga_details_read",
-     *     "editor_read",
      *     "editor_details_read",
-     *     "author_role_read",
      *     "author_role_details_read"
      * })
      * @Assert\Length(
