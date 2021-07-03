@@ -6,12 +6,28 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditorCollectionRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"editor_collection_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"editor_collection_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class EditorCollection
 {
@@ -20,6 +36,16 @@ class EditorCollection
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({
+     *     "editor_collection_read",
+     *     "editor_collection_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "manga_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
@@ -31,12 +57,14 @@ class EditorCollection
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="editorCollections")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"editor_collection_read", "editor_collection_details_read"})
      * @var Editor|null
      */
     private ?Editor $editor;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editorCollection")
+     * @Groups({"editor_collection_read", "editor_collection_details_read"})
      * @var Collection<int, Manga>
      */
     private Collection $mangas;
