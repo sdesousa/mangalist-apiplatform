@@ -5,7 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use DateTimeImmutable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  * )
  */
-class User implements UserInterface
+class User implements PasswordAuthenticatedUserInterface
 {
     use RessourceId;
     use Timestampable;
@@ -95,6 +95,7 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
+     * @return array<string>
      */
     public function getRoles(): array
     {

@@ -8,10 +8,14 @@ use App\Entity\Record;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 use Faker;
 
 class MangaRecordFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @throws Exception
+     */
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
