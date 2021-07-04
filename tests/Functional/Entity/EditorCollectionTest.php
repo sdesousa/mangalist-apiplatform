@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Entity;
 
+use App\Tests\Functional\AbstractEndPoint;
 use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

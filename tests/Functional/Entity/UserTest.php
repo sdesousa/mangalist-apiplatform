@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Entity;
 
+use App\Tests\Functional\AbstractEndPoint;
 use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,6 +51,6 @@ class UserTest extends AbstractEndPoint
     private function getPayload(): string
     {
         $faker = Factory::create();
-        return sprintf($this->userPayload, $faker->email);
+        return sprintf($this->userPayload, $faker->email());
     }
 }
