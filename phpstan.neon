@@ -4,5 +4,3 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 parameters:
     level: max
-    bootstrapFiles:
-        - bin/.phpunit/phpunit-7.5-0/vendor/autoload.php

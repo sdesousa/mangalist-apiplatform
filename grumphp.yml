@@ -25,10 +25,12 @@ grumphp:
         phpstan:
             autoload_file: ./vendor/autoload.php
             configuration: ./phpstan.neon
-            level: max
         phpmd:
             whitelist_patterns:
                 - 'src'
+                - 'test'
             ruleset:
                 - 'phpmd.xml'
         psalm: ~
+        phpunit:
+            always_execute: true

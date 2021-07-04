@@ -6,11 +6,15 @@ use App\Entity\Editor;
 use App\Entity\Manga;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
+use Exception;
 use Faker;
 
 class MangaFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @throws Exception
+     */
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');

@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use DateTimeImmutable;
@@ -16,7 +17,22 @@ use DateTimeImmutable;
  *     fields={"title"},
  *     message="Titre déjà présent"
  * )
- * @ApiResource()
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"manga_read", "id"}}
+ *          },
+ *          "post"
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"manga_details_read", "id", "timestamp"}}
+ *          },
+ *          "put",
+ *          "patch",
+ *          "delete"
+ *     }
+ * )
  */
 class Manga
 {
@@ -25,6 +41,16 @@ class Manga
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @Assert\NotBlank(message="Titre obligatoire")
      * @Assert\Length(
      *      max = 255,
@@ -36,6 +62,16 @@ class Manga
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @Assert\Positive(message="Dois être strictement positif")
      * @var int|null
      */
@@ -43,6 +79,16 @@ class Manga
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @Assert\PositiveOrZero(message="Dois être positif")
      * @var int|null
      */
@@ -50,6 +96,16 @@ class Manga
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @Assert\GreaterThanOrEqual(
      *     value="1900",
      *     message="Année invalide"
@@ -61,30 +117,67 @@ class Manga
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="mangas")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "author_details_read"
+     * })
      * @var Editor|null
      */
     private ?Editor $editor;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EditorCollection", inversedBy="mangas")
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @var EditorCollection|null
      */
     private ?EditorCollection $editorCollection;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="manga", cascade={"persist"})
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read"
+     * })
      * @var Collection<int, MangaAuthor>
      */
     private Collection $mangaAuthors;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({
+     *     "manga_read",
+     *     "manga_details_read",
+     *     "record_details_read",
+     *     "manga_record_details_read",
+     *     "manga_author_details_read",
+     *     "editor_collection_details_read",
+     *     "editor_details_read",
+     *     "author_details_read"
+     * })
      * @var string|null
      */
     private ?string $comment;
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="manga", orphanRemoval=true)
+     * @Groups({"manga_read", "manga_details_read"})
      * @var Collection<int, MangaRecord>
      */
     private Collection $mangaRecords;

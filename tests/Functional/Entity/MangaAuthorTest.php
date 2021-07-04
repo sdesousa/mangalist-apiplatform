@@ -1,17 +1,21 @@
 <?php
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Entity;
 
+use App\Tests\Functional\AbstractEndPoint;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Faker\Factory;
 
-class EditorCollectionTest extends AbstractEndPoint
+class MangaAuthorTest extends AbstractEndPoint
 {
 
-    public function testGetEditorCollections(): void
+    /**
+     * @throws JsonException
+     */
+    public function testGetMangaAuthors(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editor_collections');
+        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/manga_authors');
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
