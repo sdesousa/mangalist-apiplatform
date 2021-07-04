@@ -28,6 +28,7 @@ grumphp:
         phpmd:
             whitelist_patterns:
                 - 'src'
+                - 'test'
             ruleset:
                 - 'phpmd.xml'
         psalm: ~
