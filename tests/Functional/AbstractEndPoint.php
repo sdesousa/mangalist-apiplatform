@@ -20,12 +20,13 @@ abstract class AbstractEndPoint extends WebTestCase
         $client = self::createClient();
         $client->request(
             $method,
-            $uri . '.json',
+            $uri.'.json',
             [],
             [],
             $this->serverInformations,
             $payload
         );
+
         return $client->getResponse();
     }
 }

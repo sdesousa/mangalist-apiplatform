@@ -3,11 +3,15 @@
 namespace App\Tests\Functional\Entity;
 
 use App\Tests\Functional\AbstractEndPoint;
+use Faker\Factory;
 use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Faker\Factory;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserTest extends AbstractEndPoint
 {
     private string $userPayload = '{"email": "%s", "password": "password"}';
@@ -51,6 +55,7 @@ class UserTest extends AbstractEndPoint
     private function getPayload(): string
     {
         $faker = Factory::create();
+
         return sprintf($this->userPayload, $faker->email());
     }
 }

@@ -7,8 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method MangaRecord|null find($id, $lockMode = null, $lockVersion = null)
- * @method MangaRecord|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|MangaRecord find($id, $lockMode = null, $lockVersion = null)
+ * @method null|MangaRecord findOneBy(array $criteria, array $orderBy = null)
  * @method MangaRecord[]    findAll()
  * @method MangaRecord[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<MangaRecord>
@@ -20,9 +20,6 @@ class MangaRecordRepository extends ServiceEntityRepository
         parent::__construct($registry, MangaRecord::class);
     }
 
-    /**
-     * @return array
-     */
     public function findAllOrderByManga(): array
     {
         return $this->createQueryBuilder('l')
@@ -30,6 +27,7 @@ class MangaRecordRepository extends ServiceEntityRepository
             ->leftJoin('l.manga', 'm')
             ->orderBy('m.title', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

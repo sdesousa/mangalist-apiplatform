@@ -18,10 +18,10 @@ class EditorCollectionFixtures extends Fixture implements DependentFixtureInterf
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 10; $i++) {
-            $editor = $this->getReference('editor_' . $i);
+        for ($i = 0; $i < 10; ++$i) {
+            $editor = $this->getReference('editor_'.$i);
             $nbCollection = random_int(2, 5);
-            for ($j = 0; $j < $nbCollection; $j++) {
+            for ($j = 0; $j < $nbCollection; ++$j) {
                 $editorCollection = new EditorCollection();
                 $editorCollection->setName($faker->word);
                 if ($editor instanceof Editor) {

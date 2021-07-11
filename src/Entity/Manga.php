@@ -2,14 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MangaRepository")
@@ -19,18 +24,61 @@ use DateTimeImmutable;
  * )
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_read", "id"}},
+ *             "skip_null_values": false
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "title": "ipartial",
+ *         "comment": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"totalVolume", "availableVolume", "year"}
+ * )
+ * @ApiFilter(
+ *     RangeFilter::class,
+ *     properties={"totalVolume", "availableVolume", "year"}
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "title": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "totalVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "availableVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "year": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "comment": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         }
  *     }
  * )
  */
@@ -53,10 +101,9 @@ class Manga
      * })
      * @Assert\NotBlank(message="Titre obligatoire")
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string
      */
     private string $title;
 
@@ -73,7 +120,6 @@ class Manga
      *     "author_details_read"
      * })
      * @Assert\Positive(message="Dois être strictement positif")
-     * @var int|null
      */
     private ?int $totalVolume;
 
@@ -90,7 +136,6 @@ class Manga
      *     "author_details_read"
      * })
      * @Assert\PositiveOrZero(message="Dois être positif")
-     * @var int|null
      */
     private ?int $availableVolume;
 
@@ -110,7 +155,6 @@ class Manga
      *     value="1900",
      *     message="Année invalide"
      * )
-     * @var int|null
      */
     private ?int $year;
 
@@ -126,7 +170,6 @@ class Manga
      *     "editor_collection_details_read",
      *     "author_details_read"
      * })
-     * @var Editor|null
      */
     private ?Editor $editor;
 
@@ -141,7 +184,6 @@ class Manga
      *     "editor_details_read",
      *     "author_details_read"
      * })
-     * @var EditorCollection|null
      */
     private ?EditorCollection $editorCollection;
 
@@ -155,6 +197,7 @@ class Manga
      *     "editor_collection_details_read",
      *     "editor_details_read"
      * })
+     *
      * @var Collection<int, MangaAuthor>
      */
     private Collection $mangaAuthors;
@@ -171,13 +214,13 @@ class Manga
      *     "editor_details_read",
      *     "author_details_read"
      * })
-     * @var string|null
      */
     private ?string $comment;
 
     /**
      * @ORM\OneToMany(targetEntity=MangaRecord::class, mappedBy="manga", orphanRemoval=true)
      * @Groups({"manga_read", "manga_details_read"})
+     *
      * @var Collection<int, MangaRecord>
      */
     private Collection $mangaRecords;

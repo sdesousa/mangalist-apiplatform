@@ -18,9 +18,9 @@ class MangaFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 400; $i++) {
+        for ($i = 0; $i < 400; ++$i) {
             $manga = new Manga();
-            $editor = $this->getReference('editor_' . random_int(0, 9));
+            $editor = $this->getReference('editor_'.random_int(0, 9));
             $manga->setTitle($faker->sentence(3));
             $totalVolume = (random_int(0, 100) < 70) ? null : random_int(1, 120);
             $manga->setTotalVolume($totalVolume);
@@ -33,7 +33,7 @@ class MangaFixtures extends Fixture implements DependentFixtureInterface
             }
             (random_int(0, 100) < 70) ?: $manga->setAvailableVolume(random_int(0, $totalVolume ?? 120));
             (random_int(0, 100) < 80) ?: $manga->setComment($faker->sentence(8));
-            $this->addReference('manga_' . $i, $manga);
+            $this->addReference('manga_'.$i, $manga);
             $manager->persist($manga);
         }
         $manager->flush();

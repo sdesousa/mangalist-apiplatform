@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Trait Timestampable
- * @package App\Entity
+ * Trait Timestampable.
  */
 trait Timestampable
 {
@@ -18,7 +17,6 @@ trait Timestampable
      * @Groups({"timestamp"})
      * @Assert\NotNull(message="Date de création obligatoire")
      * @Assert\Type("\DateTimeInterface", message="Dois être une date")
-     * @var DateTimeInterface
      */
     private DateTimeInterface $createdAt;
 
@@ -26,10 +24,10 @@ trait Timestampable
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"timestamp"})
      * @Assert\Type("\DateTimeInterface", message="Dois être une date")
+     *
      * @var ?DateTimeInterface
      */
     private ?DateTimeInterface $updatedAt;
-
 
     public function getCreatedAt(): ?DateTimeInterface
     {

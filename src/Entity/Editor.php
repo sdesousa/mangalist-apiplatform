@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditorRepository")
@@ -19,18 +22,36 @@ use DateTimeImmutable;
  * )
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"editor_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"editor_read", "id"}},
+ *             "skip_null_values": false
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"editor_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"editor_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "name": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "name": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
  *     }
  * )
  */
@@ -53,16 +74,16 @@ class Editor
      * })
      * @Assert\NotBlank(message="Titre obligatoire")
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string
      */
     private string $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editor")
      * @Groups({"editor_read", "editor_details_read"})
+     *
      * @var Collection<int, Manga>
      */
     private Collection $mangas;
@@ -70,6 +91,7 @@ class Editor
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EditorCollection", mappedBy="editor", orphanRemoval=true)
      * @Groups({"editor_read", "editor_details_read"})
+     *
      * @var Collection<int, EditorCollection>
      */
     private Collection $editorCollections;

@@ -2,30 +2,51 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EditorCollectionRepository")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"editor_collection_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"editor_collection_read", "id"}},
+ *             "skip_null_values": false
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"editor_collection_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"editor_collection_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "name": "ipartial",
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "name": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
  *     }
  * )
  */
@@ -47,10 +68,9 @@ class EditorCollection
      *     "author_details_read"
      * })
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Titre trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Titre trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string
      */
     private string $name;
 
@@ -58,13 +78,13 @@ class EditorCollection
      * @ORM\ManyToOne(targetEntity="App\Entity\Editor", inversedBy="editorCollections")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"editor_collection_read", "editor_collection_details_read"})
-     * @var Editor|null
      */
     private ?Editor $editor;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Manga", mappedBy="editorCollection")
      * @Groups({"editor_collection_read", "editor_collection_details_read"})
+     *
      * @var Collection<int, Manga>
      */
     private Collection $mangas;

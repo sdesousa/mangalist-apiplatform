@@ -2,14 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MangaRecordRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass=MangaRecordRepository::class)
@@ -19,19 +24,46 @@ use DateTimeImmutable;
  * )
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_record_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_record_read", "id"}},
+ *             "skip_null_values": false
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_record_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_record_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
  *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "id": "exact",
+ *         "comment": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "possessedVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         }
+ *     }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"possessedVolume"}
+ * )
+ * @ApiFilter(
+ *     RangeFilter::class,
+ *     properties={"possessedVolume"}
  * )
  */
 class MangaRecord
@@ -43,7 +75,6 @@ class MangaRecord
      * @ORM\ManyToOne(targetEntity=Manga::class, inversedBy="mangaRecords")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"manga_record_read", "manga_record_details_read", "record_details_read"})
-     * @var Manga|null
      */
     private ?Manga $manga;
 
@@ -51,7 +82,6 @@ class MangaRecord
      * @ORM\ManyToOne(targetEntity=Record::class, inversedBy="mangaRecords")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"manga_record_read", "manga_record_details_read"})
-     * @var Record|null
      */
     private ?Record $record;
 
@@ -59,7 +89,6 @@ class MangaRecord
      * @ORM\Column(type="integer")
      * @Groups({"manga_record_read", "manga_record_details_read", "record_details_read"})
      * @Assert\Positive(message="Dois être strictement positif")
-     * @var int|null
      */
     private ?int $possessedVolume;
 
@@ -77,8 +106,8 @@ class MangaRecord
 
     /**
      * @Assert\Callback
-     * @param ExecutionContextInterface $context
-     * @param Mixed $payload
+     *
+     * @param mixed $payload
      */
     public function validate(ExecutionContextInterface $context, $payload): void
     {
@@ -86,7 +115,8 @@ class MangaRecord
         if (!is_null($manga) && $this->getPossessedVolume() > $manga->getTotalVolume()) {
             $context->buildViolation('Ne peut pas être supérieur au total de volumes')
                 ->atPath('possessedVolume')
-                ->addViolation();
+                ->addViolation()
+            ;
         }
     }
 
@@ -138,12 +168,10 @@ class MangaRecord
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isFinished(): bool
     {
         $manga = $this->getManga();
-        return (!is_null($manga) && $this->getPossessedVolume() === $manga->getTotalVolume());
+
+        return !is_null($manga) && $this->getPossessedVolume() === $manga->getTotalVolume();
     }
 }

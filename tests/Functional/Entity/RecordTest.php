@@ -7,9 +7,12 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RecordTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */

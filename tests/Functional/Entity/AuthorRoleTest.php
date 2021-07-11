@@ -7,9 +7,12 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AuthorRoleTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */

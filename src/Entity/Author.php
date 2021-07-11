@@ -2,30 +2,67 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
- * @ApiResource(collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"author_read", "id"}}
- *          },
- *          "post"
+ * @ApiResource(
+ *     collectionOperations={
+ *         "get": {
+ *             "normalization_context": {
+ *                 "groups": {"author_read", "id"},
+ *                 "skip_null_values": false
+ *             }
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"author_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
- *     })
+ *         "get": {
+ *             "normalization_context": {
+ *                 "groups": {"author_details_read", "id", "timestamp"},
+ *                 "skip_null_values": false
+ *             }
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "firstname": "ipartial",
+ *         "lastname": "ipartial",
+ *         "penname": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "firstname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         },
+ *         "lastname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         },
+ *         "penname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         }
+ *     }
+ * )
  */
 class Author
 {
@@ -45,10 +82,9 @@ class Author
      *     "author_role_details_read"
      * })
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Prénom trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Prénom trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string|null
      */
     private ?string $firstname;
 
@@ -65,10 +101,9 @@ class Author
      *     "author_role_details_read"
      * })
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Nom trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Nom trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string|null
      */
     private ?string $lastname;
 
@@ -85,16 +120,16 @@ class Author
      *     "author_role_details_read"
      * })
      * @Assert\Length(
-     *      max = 255,
-     *      maxMessage = "Pseudo trop long, il doit être au plus {{ limit }} caractères"
+     *     max=255,
+     *     maxMessage="Pseudo trop long, il doit être au plus {{ limit }} caractères"
      * )
-     * @var string|null
      */
     private ?string $penname;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MangaAuthor", mappedBy="author")
      * @Groups({"author_read", "author_details_read"})
+     *
      * @var Collection<int, MangaAuthor>
      */
     private Collection $mangaAuthors;
@@ -174,6 +209,6 @@ class Author
 
     public function getFullname(): ?string
     {
-        return $this->getPenname() ?? $this->getLastname() . ' ' . $this->getFirstname();
+        return $this->getPenname() ?? $this->getLastname().' '.$this->getFirstname();
     }
 }

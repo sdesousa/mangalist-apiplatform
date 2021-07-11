@@ -8,11 +8,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 trait RessourceId
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"id"})
-     * @var int
      */
     private int $id;
 

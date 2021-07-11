@@ -7,8 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EditorCollection|null find($id, $lockMode = null, $lockVersion = null)
- * @method EditorCollection|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|EditorCollection find($id, $lockMode = null, $lockVersion = null)
+ * @method null|EditorCollection findOneBy(array $criteria, array $orderBy = null)
  * @method EditorCollection[]    findAll()
  * @method EditorCollection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<EditorCollection>
@@ -20,9 +20,6 @@ class EditorCollectionRepository extends ServiceEntityRepository
         parent::__construct($registry, EditorCollection::class);
     }
 
-    /**
-     * @return array
-     */
     public function findAllOrderByEditor(): array
     {
         return $this->createQueryBuilder('c')
@@ -31,6 +28,7 @@ class EditorCollectionRepository extends ServiceEntityRepository
             ->orderBy('e.name', 'ASC')
             ->addOrderBy('c.name', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

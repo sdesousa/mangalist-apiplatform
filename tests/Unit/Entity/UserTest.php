@@ -7,6 +7,10 @@ use App\Entity\User;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UserTest extends TestCase
 {
     private User $user;
