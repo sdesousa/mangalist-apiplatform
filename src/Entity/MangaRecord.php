@@ -2,7 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\MangaRecordRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,18 +25,45 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ApiResource(
  *     collectionOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"manga_record_read", "id"}}
+ *             "normalization_context": {"groups": {"manga_record_read", "id"}},
+ *             "skip_null_values": false
  *         },
  *         "post"
  *     },
  *     itemOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"manga_record_details_read", "id", "timestamp"}}
+ *             "normalization_context": {"groups": {"manga_record_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
  *         },
  *         "put",
  *         "patch",
  *         "delete"
  *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "id": "exact",
+ *         "comment": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "possessedVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         }
+ *     }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"possessedVolume"}
+ * )
+ * @ApiFilter(
+ *     RangeFilter::class,
+ *     properties={"possessedVolume"}
  * )
  */
 class MangaRecord

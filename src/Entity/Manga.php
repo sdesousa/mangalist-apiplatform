@@ -2,7 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,17 +25,60 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"manga_read", "id"}}
+ *             "normalization_context": {"groups": {"manga_read", "id"}},
+ *             "skip_null_values": false
  *         },
  *         "post"
  *     },
  *     itemOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"manga_details_read", "id", "timestamp"}}
+ *             "normalization_context": {"groups": {"manga_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
  *         },
  *         "put",
  *         "patch",
  *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "title": "ipartial",
+ *         "comment": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"totalVolume", "availableVolume", "year"}
+ * )
+ * @ApiFilter(
+ *     RangeFilter::class,
+ *     properties={"totalVolume", "availableVolume", "year"}
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "title": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "totalVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "availableVolume": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "year": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
+ *         "comment": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         }
  *     }
  * )
  */
