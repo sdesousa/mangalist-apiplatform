@@ -8,6 +8,10 @@ use App\Entity\User;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RecordTest extends TestCase
 {
     private Record $record;

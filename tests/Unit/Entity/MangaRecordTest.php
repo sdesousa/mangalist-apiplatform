@@ -8,6 +8,10 @@ use App\Entity\Record;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MangaRecordTest extends TestCase
 {
     private MangaRecord $mangaRecord;

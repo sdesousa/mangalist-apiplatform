@@ -8,6 +8,10 @@ use App\Entity\Manga;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EditorTest extends TestCase
 {
     private Editor $editor;

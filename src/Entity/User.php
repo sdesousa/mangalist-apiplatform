@@ -7,9 +7,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use DateTimeImmutable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -117,6 +117,7 @@ class User implements PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     *
      * @return array<string>
      */
     public function getRoles(): array

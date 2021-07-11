@@ -7,15 +7,18 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthorRoleTest extends AbstractEndPoint
+/**
+ * @internal
+ * @coversNothing
+ */
+class MangaTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */
-    public function testGetAuthorRoles(): void
+    public function testGetMangas(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/author_roles');
+        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/mangas');
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

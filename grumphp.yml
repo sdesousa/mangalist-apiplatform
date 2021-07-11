@@ -1,12 +1,5 @@
 grumphp:
     tasks:
-<<<<<<< HEAD
-        phpcs:
-            standard: PSR12
-        phpstan:
-            autoload_file: ./vendor/autoload.php
-            configuration: ./phpstan.neon
-=======
         phpcsfixer:
             config: .php-cs-fixer.dist.php
 #        phpcs:
@@ -16,17 +9,11 @@ grumphp:
 #                - 'src'
 #                - 'test'
 #            min_lines: 5
->>>>>>> grumphp
         phpmd:
             whitelist_patterns:
                 - 'src'
                 - 'test'
             ruleset:
-<<<<<<< HEAD
-                - 'phpmd.xml'
-        psalm: ~
-        phpunit:
-=======
                 - 'phpmd.xml.dist'
         phpstan:
             autoload_file: ./vendor/autoload.php
@@ -35,5 +22,4 @@ grumphp:
             config: psalm.xml.dist
         phpunit:
             config_file: phpunit.xml.dist
->>>>>>> grumphp
             always_execute: true

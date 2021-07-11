@@ -55,6 +55,7 @@ class UserTest extends AbstractEndPoint
     private function getPayload(): string
     {
         $faker = Factory::create();
+
         return sprintf($this->userPayload, $faker->email());
     }
 }

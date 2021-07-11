@@ -7,6 +7,10 @@ use App\Entity\MangaAuthor;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AuthorRoleTest extends TestCase
 {
     private AuthorRole $authorRole;

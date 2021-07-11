@@ -7,15 +7,18 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditorTest extends AbstractEndPoint
+/**
+ * @internal
+ * @coversNothing
+ */
+class AuthorRoleTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */
-    public function testGetEditors(): void
+    public function testGetAuthorRoles(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editors');
+        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/author_roles');
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
