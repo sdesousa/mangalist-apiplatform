@@ -8,8 +8,15 @@
 >
     <projectFiles>
         <directory name="src" />
+        <directory name="tests"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <file name="tests/bootstrap.php"/>
+            <directory name="config"/>
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+    </plugins>
 </psalm>

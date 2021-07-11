@@ -18,13 +18,13 @@ class MangaAuthorFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 400; $i++) {
-            $manga = $this->getReference('manga_' . $i);
+        for ($i = 0; $i < 400; ++$i) {
+            $manga = $this->getReference('manga_'.$i);
             $nbAuthors = random_int(0, 100) < 80 ? 1 : random_int(2, 3);
             if ($manga instanceof Manga) {
-                for ($j = 0; $j < $nbAuthors; $j++) {
-                    $author = $this->getReference('author_' . random_int(0, 99));
-                    $authorRole = $this->getReference('authorRole_' . random_int(0, 3));
+                for ($j = 0; $j < $nbAuthors; ++$j) {
+                    $author = $this->getReference('author_'.random_int(0, 99));
+                    $authorRole = $this->getReference('authorRole_'.random_int(0, 3));
                     $mangaAuthor = new MangaAuthor();
                     $mangaAuthor->setManga($manga);
                     if ($author instanceof Author) {
@@ -45,7 +45,7 @@ class MangaAuthorFixtures extends Fixture implements DependentFixtureInterface
         return [
             AuthorFixtures::class,
             AuthorRoleFixtures::class,
-            MangaFixtures::class
+            MangaFixtures::class,
         ];
     }
 }

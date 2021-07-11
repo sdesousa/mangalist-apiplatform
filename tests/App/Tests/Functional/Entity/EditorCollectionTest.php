@@ -7,6 +7,10 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EditorCollectionTest extends AbstractEndPoint
 {
 
