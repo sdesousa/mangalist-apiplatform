@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,17 +18,35 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     collectionOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"editor_collection_read", "id"}}
+ *             "normalization_context": {"groups": {"editor_collection_read", "id"}},
+ *             "skip_null_values": false
  *         },
  *         "post"
  *     },
  *     itemOperations={
  *         "get": {
- *             "normalization_context": {"groups": {"editor_collection_details_read", "id", "timestamp"}}
+ *             "normalization_context": {"groups": {"editor_collection_details_read", "id", "timestamp"}},
+ *             "skip_null_values": false
  *         },
  *         "put",
  *         "patch",
  *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "name": "ipartial",
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "name": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         },
  *     }
  * )
  */

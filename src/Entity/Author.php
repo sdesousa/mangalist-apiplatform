@@ -35,32 +35,34 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "put",
  *         "patch",
  *         "delete"
- *     })
- *     @ApiFilter(
- *         SearchFilter::class,
- *         properties={
- *             "id": "exact",
- *             "firstname": "ipartial",
- *             "lastname": "ipartial",
- *             "penname": "ipartial"
- *         })
- *         @ApiFilter(
- *             OrderFilter::class,
- *             properties={
- *                 "id": "ASC",
- *                 "firstname": {
- *                     "default_direction": "ASC",
- *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
- *                 },
- *                 "lastname": {
- *                     "default_direction": "ASC",
- *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
- *                 },
- *                 "penname": {
- *                     "default_direction": "ASC",
- *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
- *                 }
- *             })
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "firstname": "ipartial",
+ *         "lastname": "ipartial",
+ *         "penname": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "firstname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         },
+ *         "lastname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         },
+ *         "penname": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST,
+ *         }
+ *     }
+ * )
  */
 class Author
 {
