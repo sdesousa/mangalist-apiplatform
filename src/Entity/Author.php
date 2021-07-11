@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,20 +15,52 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
- * @ApiResource(collectionOperations={
- *     "get": {
- *         "normalization_context": {"groups": {"author_read", "id"}}
+ * @ApiResource(
+ *     collectionOperations={
+ *         "get": {
+ *             "normalization_context": {
+ *                 "groups": {"author_read", "id"},
+ *                 "skip_null_values": false
+ *             }
+ *         },
+ *         "post"
  *     },
- *     "post"
- * },
- * itemOperations={
- *     "get": {
- *         "normalization_context": {"groups": {"author_details_read", "id", "timestamp"}}
- *     },
- *     "put",
- *     "patch",
- *     "delete"
- * })
+ *     itemOperations={
+ *         "get": {
+ *             "normalization_context": {
+ *                 "groups": {"author_details_read", "id", "timestamp"},
+ *                 "skip_null_values": false
+ *             }
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     })
+ *     @ApiFilter(
+ *         SearchFilter::class,
+ *         properties={
+ *             "id": "exact",
+ *             "firstname": "ipartial",
+ *             "lastname": "ipartial",
+ *             "penname": "ipartial"
+ *         })
+ *         @ApiFilter(
+ *             OrderFilter::class,
+ *             properties={
+ *                 "id": "ASC",
+ *                 "firstname": {
+ *                     "default_direction": "ASC",
+ *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *                 },
+ *                 "lastname": {
+ *                     "default_direction": "ASC",
+ *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *                 },
+ *                 "penname": {
+ *                     "default_direction": "ASC",
+ *                     "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *                 }
+ *             })
  */
 class Author
 {
