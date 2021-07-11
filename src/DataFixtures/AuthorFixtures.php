@@ -15,7 +15,7 @@ class AuthorFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('ja_JP');
+        $faker = Faker\Factory::create('fr_FR');
         for ($i = 0; $i < 100; ++$i) {
             $author = new Author();
             if (random_int(0, 100) < 90) {
