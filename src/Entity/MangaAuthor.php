@@ -3,26 +3,26 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MangaAuthorRepository")
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_author_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_author_read", "id"}}
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"manga_author_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"manga_author_details_read", "id", "timestamp"}}
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
  *     }
  * )
  */
@@ -43,7 +43,6 @@ class MangaAuthor
      *     "editor_details_read",
      *     "author_details_read"
      * })
-     * @var AuthorRole|null
      */
     private ?AuthorRole $authorRole;
 
@@ -55,7 +54,6 @@ class MangaAuthor
      *     "manga_author_details_read",
      *     "author_details_read"
      * })
-     * @var Manga|null
      */
     private ?Manga $manga;
 
@@ -71,7 +69,6 @@ class MangaAuthor
      *     "editor_details_read",
      *     "author_role_details_read"
      * })
-     * @var Author|null
      */
     private ?Author $author;
 

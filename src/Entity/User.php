@@ -4,27 +4,27 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use DateTimeImmutable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"user_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"user_read", "id"}}
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"user_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"user_details_read", "id", "timestamp"}}
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
  *     }
  * )
  */
@@ -36,18 +36,19 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=100, unique=true)
      * @Groups({"user_read", "user_details_read"})
-     * @var string
      */
     private string $email;
 
     /**
      * @ORM\Column(type="json")
+     *
      * @var array<string>
      */
     private array $roles = [];
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string The hashed password
      */
     private string $password;
@@ -55,6 +56,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToOne(targetEntity=Record::class, mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user_read", "user_details_read"})
+     *
      * @var ?Record
      */
     private ?Record $record;
@@ -78,6 +80,7 @@ class User implements UserInterface
 
     /**
      * A visual identifier that represents this user.
+     *
      * @see UserInterface
      */
     public function getUsername(): string
@@ -105,9 +108,9 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-
     /**
      * @param array<string> $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): self

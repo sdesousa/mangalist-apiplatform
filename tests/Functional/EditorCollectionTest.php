@@ -4,11 +4,13 @@ namespace App\Tests\Functional;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Faker\Factory;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EditorCollectionTest extends AbstractEndPoint
 {
-
     public function testGetEditorCollections(): void
     {
         $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editor_collections');

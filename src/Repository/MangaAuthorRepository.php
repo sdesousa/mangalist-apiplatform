@@ -7,8 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method MangaAuthor|null find($id, $lockMode = null, $lockVersion = null)
- * @method MangaAuthor|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|MangaAuthor find($id, $lockMode = null, $lockVersion = null)
+ * @method null|MangaAuthor findOneBy(array $criteria, array $orderBy = null)
  * @method MangaAuthor[]    findAll()
  * @method MangaAuthor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<MangaAuthor>

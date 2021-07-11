@@ -15,10 +15,10 @@ class MangaRecordFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < 300; ++$i) {
             $mangaRecord = new MangaRecord();
-            $manga = $this->getReference('manga_' . random_int(0, 399));
-            $record  = $this->getReference('record');
+            $manga = $this->getReference('manga_'.random_int(0, 399));
+            $record = $this->getReference('record');
             if ($record instanceof Record) {
                 $mangaRecord->setRecord($record);
             }
@@ -36,7 +36,7 @@ class MangaRecordFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             RecordFixtures::class,
-            MangaFixtures::class
+            MangaFixtures::class,
         ];
     }
 }
