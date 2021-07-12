@@ -18,7 +18,13 @@ class MangaTest extends AbstractEndPoint
      */
     public function testGetMangas(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/mangas');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/mangas',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

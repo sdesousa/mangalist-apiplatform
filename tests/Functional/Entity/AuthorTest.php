@@ -18,7 +18,13 @@ class AuthorTest extends AbstractEndPoint
      */
     public function testGetAuthors(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/authors');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/authors',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

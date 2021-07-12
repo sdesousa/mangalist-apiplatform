@@ -18,7 +18,13 @@ class MangaRecordTest extends AbstractEndPoint
      */
     public function testGetMangaRecords(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/manga_records');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/manga_records',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
