@@ -26,7 +26,7 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
         api:
-            pattern: ^/api/users
+            pattern: ^/api
             methods: [POST, PUT, PATCH, DELETE]
             stateless: true
             jwt: ~
