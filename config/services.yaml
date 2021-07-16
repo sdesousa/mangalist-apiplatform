@@ -34,3 +34,24 @@ services:
         class: App\EventListener\JWTCreatedListener
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    mangalist_api.exception_subscriber:
+        class: App\Events\ExceptionListener
+        arguments:
+            - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    mangalist_api.normalizer.resource_access_exception:
+        class: App\Normalizer\ResourceAccessExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\ResourceAccessException' }
+        tags:
+            - { name: mangalist_api.normalizer }
+
+    mangalist_api.normalizer.authentication_exception:
+        class: App\Normalizer\AuthenticationExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\AuthenticationException' }
+        tags:
+            - { name: mangalist_api.normalizer }

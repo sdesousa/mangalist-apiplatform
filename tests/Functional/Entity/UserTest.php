@@ -166,7 +166,7 @@ class UserTest extends AbstractEndPoint
             $responseDecoded = json_decode($responseContent, true, 512, JSON_THROW_ON_ERROR);
             self::assertJson($responseContent);
             self::assertNotEmpty($responseDecoded);
-            self::assertEquals($this->notYourResource, $responseDecoded['detail']);
+            self::assertEquals($this->notYourResource, $responseDecoded['message']);
         }
     }
 
