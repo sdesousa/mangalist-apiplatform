@@ -20,6 +20,6 @@ grumphp:
             configuration: ./phpstan.neon
         psalm:
             config: psalm.xml.dist
-        phpunit:
-            config_file: phpunit.xml.dist
-            always_execute: true
+#        phpunit:
+#            config_file: phpunit.xml.dist
+#            always_execute: true
