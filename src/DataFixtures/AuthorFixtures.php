@@ -15,8 +15,8 @@ class AuthorFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('ja_JP');
-        for ($i = 0; $i < 100; $i++) {
+        $faker = Faker\Factory::create('fr_FR');
+        for ($i = 0; $i < 100; ++$i) {
             $author = new Author();
             if (random_int(0, 100) < 90) {
                 $author->setFirstname($faker->firstName);
@@ -24,7 +24,7 @@ class AuthorFixtures extends Fixture
             } else {
                 $author->setPenname($faker->word);
             }
-            $this->addReference('author_' . $i, $author);
+            $this->addReference('author_'.$i, $author);
             $manager->persist($author);
         }
         $manager->flush();

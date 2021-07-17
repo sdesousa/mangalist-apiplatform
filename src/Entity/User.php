@@ -2,52 +2,90 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Email déjà utilisé"
+ * )
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"user_read", "id"}}
- *          },
- *          "post"
+ *         "get": {
+ *             "normalization_context": {"groups": {"user_read", "id"}}
+ *         },
+ *         "post"
  *     },
  *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"user_details_read", "id", "timestamp"}}
- *          },
- *          "put",
- *          "patch",
- *          "delete"
+ *         "get": {
+ *             "normalization_context": {"groups": {"user_details_read", "id", "timestamp"}}
+ *         },
+ *         "put",
+ *         "patch",
+ *         "delete"
+ *     }
+ * )
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *         "email": "ipartial"
+ *     }
+ * )
+ * @ApiFilter(
+ *     OrderFilter::class,
+ *     properties={
+ *         "id": "ASC",
+ *         "email": {
+ *             "default_direction": "ASC",
+ *             "nulls_comparison": OrderFilter::NULLS_LARGEST
+ *         }
  *     }
  * )
  */
-class User implements PasswordAuthenticatedUserInterface
+class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     use RessourceId;
     use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Email obligatoire")
+     * @Assert\Email(message="Format invalide")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Email trop long, il doit être au plus {{ limit }} caractères"
+     * )
      * @Groups({"user_read", "user_details_read"})
-     * @var string
      */
     private string $email;
 
     /**
      * @ORM\Column(type="json")
+     *
      * @var array<string>
      */
     private array $roles = [];
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Mot de passe obligatoire")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Mot de passe trop long, il doit être au plus {{ limit }} caractères"
+     * )
+     *
      * @var string The hashed password
      */
     private string $password;
@@ -55,6 +93,7 @@ class User implements PasswordAuthenticatedUserInterface
     /**
      * @ORM\OneToOne(targetEntity=Record::class, mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user_read", "user_details_read"})
+     *
      * @var ?Record
      */
     private ?Record $record;
@@ -78,6 +117,7 @@ class User implements PasswordAuthenticatedUserInterface
 
     /**
      * A visual identifier that represents this user.
+     *
      * @see UserInterface
      */
     public function getUsername(): string
@@ -95,6 +135,7 @@ class User implements PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     *
      * @return array<string>
      */
     public function getRoles(): array
@@ -106,9 +147,9 @@ class User implements PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-
     /**
      * @param array<string> $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): self

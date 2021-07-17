@@ -7,6 +7,10 @@ use App\Entity\MangaAuthor;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AuthorTest extends TestCase
 {
     private Author $author;
@@ -53,7 +57,7 @@ class AuthorTest extends TestCase
         $this->author->setFirstname($firstname);
         $this->author->setLastname($lastname);
         $this->author->setPenname(null);
-        self::assertEquals($lastname . ' ' . $firstname, $this->author->getFullname());
+        self::assertEquals($lastname.' '.$firstname, $this->author->getFullname());
         $this->author->setPenname($penname);
         self::assertEquals($penname, $this->author->getFullname());
     }

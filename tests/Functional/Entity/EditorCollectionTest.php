@@ -7,15 +7,24 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class EditorCollectionTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */
     public function testGetEditorCollections(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editor_collections');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/editor_collections',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

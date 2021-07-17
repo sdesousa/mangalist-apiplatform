@@ -20,7 +20,7 @@ class AuthorRoleFixtures extends Fixture
         foreach (self::ROLES as $key => $role) {
             $authorRole = new AuthorRole();
             $authorRole->setRole($role);
-            $this->addReference('authorRole_' . $key, $authorRole);
+            $this->addReference('authorRole_'.$key, $authorRole);
             $manager->persist($authorRole);
         }
         $manager->flush();

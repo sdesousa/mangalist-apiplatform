@@ -7,15 +7,24 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class RecordTest extends AbstractEndPoint
 {
-
     /**
      * @throws JsonException
      */
     public function testGetRecords(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/records');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/records',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

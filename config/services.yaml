@@ -25,3 +25,40 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        autoconfigure: false
+
+    mangalist_api.event.jwt_created_listener:
+        class: App\EventListener\JWTCreatedListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    mangalist_api.events.exception_subscriber:
+        class: App\Events\ExceptionSubscriber
+        arguments:
+            - '@serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    mangalist_api.normalizer.resource_access_exception:
+        class: App\Normalizer\ResourceAccessExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\ResourceAccessException' }
+        tags:
+            - { name: mangalist_api.normalizer }
+
+    mangalist_api.normalizer.authentication_exception:
+        class: App\Normalizer\AuthenticationExceptionNormalizer
+        arguments:
+            - { type: 'App\Exceptions\AuthenticationException' }
+        tags:
+            - { name: mangalist_api.normalizer }
+
+    mangalist_api.normalizer.not_found_exception:
+        class: App\Normalizer\NotFoundExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
+        tags:
+            - { name: mangalist_api.normalizer }
