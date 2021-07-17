@@ -149,6 +149,9 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.12.0"
+    },
     "gitonomy/gitlib": {
         "version": "v1.2.3"
     },
