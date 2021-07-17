@@ -2,15 +2,18 @@
 
 namespace App\Normalizer;
 
+use App\Services\ExceptionNormalizerFormatterInterface;
 use Exception;
 
 abstract class AbstractNormalizer implements NormalizerInterface
 {
+    protected ExceptionNormalizerFormatterInterface $normalizerFormatter;
     private array $exceptionTypes;
 
-    public function __construct(array $exceptionTypes)
+    public function __construct(array $exceptionTypes, ExceptionNormalizerFormatterInterface $normalizerFormatter)
     {
         $this->exceptionTypes = $exceptionTypes;
+        $this->normalizerFormatter = $normalizerFormatter;
     }
 
     public function supports(Exception $exception): bool

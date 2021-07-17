@@ -10,7 +10,7 @@ class ExceptionNormalizerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $exceptionListenerDefinition = $container->findDefinition('mangalist_api.exception_subscriber');
+        $exceptionListenerDefinition = $container->findDefinition('mangalist_api.events.exception_subscriber');
         $normalizers = $container->findTaggedServiceIds('mangalist_api.normalizer');
 
         foreach ($normalizers as $normalizer => $tags) {

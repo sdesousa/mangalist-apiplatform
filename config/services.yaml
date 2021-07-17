@@ -35,8 +35,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
 
-    mangalist_api.exception_subscriber:
-        class: App\Events\ExceptionListener
+    mangalist_api.events.exception_subscriber:
+        class: App\Events\ExceptionSubscriber
         arguments:
             - '@serializer'
         tags:
@@ -53,5 +53,12 @@ services:
         class: App\Normalizer\AuthenticationExceptionNormalizer
         arguments:
             - { type: 'App\Exceptions\AuthenticationException' }
+        tags:
+            - { name: mangalist_api.normalizer }
+
+    mangalist_api.normalizer.not_found_exception:
+        class: App\Normalizer\NotFoundExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
         tags:
             - { name: mangalist_api.normalizer }
