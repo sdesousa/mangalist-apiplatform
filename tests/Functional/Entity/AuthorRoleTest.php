@@ -18,7 +18,13 @@ class AuthorRoleTest extends AbstractEndPoint
      */
     public function testGetAuthorRoles(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/author_roles');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/author_roles',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

@@ -9,11 +9,18 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Email déjà utilisé"
+ * )
  * @ApiResource(
  *     collectionOperations={
  *         "get": {
@@ -47,13 +54,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     }
  * )
  */
-class User implements PasswordAuthenticatedUserInterface
+class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     use RessourceId;
     use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank(message="Email obligatoire")
+     * @Assert\Email(message="Format invalide")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Email trop long, il doit être au plus {{ limit }} caractères"
+     * )
      * @Groups({"user_read", "user_details_read"})
      */
     private string $email;
@@ -67,6 +80,11 @@ class User implements PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Mot de passe obligatoire")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Mot de passe trop long, il doit être au plus {{ limit }} caractères"
+     * )
      *
      * @var string The hashed password
      */

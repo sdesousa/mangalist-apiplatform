@@ -6,7 +6,15 @@ api_platform:
     formats:
         json:
             mime_types: ['application/json']
+        html:
+            mime_types: ['text/html']
+        jsonld:
+            mime_types: ['application/ld+json']
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header

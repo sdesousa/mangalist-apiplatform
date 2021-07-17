@@ -18,7 +18,13 @@ class RecordTest extends AbstractEndPoint
      */
     public function testGetRecords(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/records');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/records',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());

@@ -21,14 +21,26 @@
     </rule>
     <rule ref="rulesets/naming.xml" >
         <exclude name="ShortVariable" />
+        <exclude name="LongVariable" />
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
             <property name="exceptions" value="id,qb" />
         </properties>
     </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="40" />
+        </properties>
+    </rule>
     <rule ref="rulesets/unusedcode.xml" >
         <exclude name="UnusedFormalParameter" />
+        <exclude name="UnusedLocalVariable"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable" >
+        <properties>
+            <property name="exceptions" value="tags" />
+        </properties>
     </rule>
     <exclude-pattern>src/Migrations</exclude-pattern>
     <exclude-pattern>src/Kernel.php</exclude-pattern>

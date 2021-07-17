@@ -18,7 +18,13 @@ class EditorTest extends AbstractEndPoint
      */
     public function testGetEditors(): void
     {
-        $response = $this->getResponseFromRequest(Request::METHOD_GET, '/api/editors');
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_GET,
+            '/api/editors',
+            '',
+            [],
+            false
+        );
         $responseContent = $response->getContent();
 
         self::assertEquals(Response::HTTP_OK, $response->getStatusCode());
